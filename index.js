@@ -43,7 +43,7 @@ app.get("/device", (req, res) => {
 });
 
 app.get("/type", (req, res) => {
-  connection.query(`SELECT id, name_lv FROM issue_type`, (error, result) => {
+  connection.query(`SELECT id, name_lv FROM report_type`, (error, result) => {
     res.send(result);
   });
 });
@@ -72,12 +72,12 @@ app.get("/getfromid", (req, res) => {
 
 app.get("/issue", (req, res) => {
   connection.query(
-    `SELECT ralfs_report_issue.id, ralfs_report_issue.date, ralfs_report_issue.time, employer.uzv AS id_user,report_source.name_lv AS id_source, object.name AS id_obj ,ralfs_report_issue.name,report_device.name_lv AS id_device,issue_type.name_lv AS id_type, note FROM ralfs_report_issue    
+    `SELECT ralfs_report_issue.id, ralfs_report_issue.date, ralfs_report_issue.time, employer.uzv AS id_user,report_source.name_lv AS id_source, object.name AS id_obj ,ralfs_report_issue.name,report_device.name_lv AS id_device,report_type.name_lv AS id_type, note FROM ralfs_report_issue    
   LEFT JOIN object ON ralfs_report_issue.id_obj = object.id
   LEFT JOIN employer ON ralfs_report_issue.id_user = employer.id
   LEFT JOIN report_source ON ralfs_report_issue.id_source = report_source.id
   LEFT JOIN report_device ON ralfs_report_issue.id_device = report_device.id
-  LEFT JOIN issue_type ON ralfs_report_issue.id_device = issue_type.id`,
+  LEFT JOIN report_type ON ralfs_report_issue.id_device = report_type.id`,
     (error, result) => {
       res.send(result);
     }
